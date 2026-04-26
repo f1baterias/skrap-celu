@@ -63,38 +63,68 @@
             color: var(--text);
             min-height: 100vh;
             min-height: 100dvh;
-            padding-bottom: env(safe-area-inset-bottom, 0);
+            padding-bottom: env(safe-area-inset-bottom, 20px);
         }
 
         /* ===== HEADER ===== */
         .header {
             background: var(--bg2);
-            padding: 14px 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             border-bottom: 2px solid var(--green);
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        .header img { height: 38px; }
+        .header img { height: 32px; }
+        
+        .header-total {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .header-total-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text2);
+            letter-spacing: 1px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        .header-total-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1;
+        }
 
         /* ===== MAIN CONTENT ===== */
         .main {
             padding: 12px;
-            padding-bottom: 60px; /* space for fixed total bar */
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* ===== ITEM CARDS ===== */
-        .items-list { display: flex; flex-direction: column; gap: 10px; }
+        .items-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
 
         .item-card {
             background: var(--card);
             border-radius: var(--r);
             padding: 12px;
             position: relative;
-            border-left: 3px solid var(--green);
+            border-left: 4px solid var(--green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .item-card .item-number {
@@ -122,12 +152,13 @@
             justify-content: center;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            z-index: 5;
         }
         .item-card .item-remove:active { background: var(--red-h); }
 
         .item-row-top {
             display: grid;
-            grid-template-columns: 1fr 72px;
+            grid-template-columns: 1fr 80px;
             gap: 8px;
             margin-top: 16px;
             margin-bottom: 8px;
@@ -141,10 +172,12 @@
 
         .item-subtotal {
             text-align: right;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--green);
-            padding: 6px 0 0;
+            padding: 8px 0 0;
+            border-top: 1px solid var(--border);
+            margin-top: 8px;
         }
 
         /* ===== FORM CONTROLS ===== */
@@ -160,7 +193,7 @@
 
         .field input, .field select {
             font-family: 'Geom Graphic', -apple-system, sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem; /* Better for mobile to prevent zoom */
             background: var(--input);
             border: 1px solid var(--border);
             color: var(--text);
@@ -173,6 +206,7 @@
 
         .field input:focus, .field select:focus {
             border-color: var(--green);
+            background: var(--hover);
         }
 
         .field input::placeholder { color: var(--muted); }
@@ -192,46 +226,48 @@
         .add-btn-wrap {
             display: flex;
             justify-content: center;
-            padding: 10px 0;
+            padding: 12px 0 20px;
         }
 
         .add-btn {
             width: 100%;
-            height: 44px;
-            border-radius: 10px;
+            height: 48px;
+            border-radius: 12px;
             background: var(--green);
             color: #fff;
             border: none;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             font-family: 'Geom Graphic', -apple-system, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             -webkit-tap-highlight-color: transparent;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: transform 0.2s;
         }
-        .add-btn:active { background: var(--green-h); transform: scale(0.97); }
+        .add-btn:active { background: var(--green-h); transform: scale(0.98); }
 
         /* ===== SECTIONS ===== */
         .section {
             background: var(--card);
             border-radius: var(--r);
             padding: 14px;
-            margin-top: 12px;
+            margin-top: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .section-title {
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             color: var(--green);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             padding-bottom: 6px;
             border-bottom: 1px solid var(--border);
         }
@@ -239,34 +275,35 @@
         /* Discount */
         .discount-grid {
             display: grid;
-            grid-template-columns: 1fr 120px;
-            gap: 8px;
+            grid-template-columns: 1fr 100px;
+            gap: 10px;
         }
 
 
         /* ===== ACTIONS ROW ===== */
         .actions-wrap {
-            display: flex;
-            gap: 10px;
-            padding: 10px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 20px 0;
         }
 
         .action-btn {
-            flex: 1;
             font-family: 'Geom Graphic', -apple-system, sans-serif;
-            font-size: 0.82rem;
-            font-weight: 600;
-            padding: 11px 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 14px 8px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .action-btn:active { transform: scale(0.97); }
 
@@ -275,39 +312,12 @@
         .action-btn.secondary { background: var(--input); color: var(--text); border: 1px solid var(--border); }
         .action-btn.secondary:active { background: var(--hover); }
 
-        /* ===== FIXED TOTAL BAR ===== */
-        .total-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg2);
-            border-top: 2px solid var(--green);
-            padding: 8px 16px;
-            padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 50;
-        }
-        .total-bar-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text2);
-            letter-spacing: 1px;
-        }
-        .total-bar-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--green);
-        }
-
         /* ===== MODAL ===== */
         .modal-bg {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.75);
+            background: rgba(0,0,0,0.85);
             z-index: 200;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -329,13 +339,19 @@
             position: absolute;
             top: 10px;
             right: 12px;
-            background: none;
+            background: var(--bg);
             border: none;
             color: var(--text2);
             font-size: 1.6rem;
             cursor: pointer;
             line-height: 1;
             padding: 4px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -345,47 +361,31 @@
             margin-top: 16px;
         }
 
-        .modal-btns .action-btn {
-            flex: 1;
-            font-family: 'Geom Graphic', -apple-system, sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 12px 8px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-transform: uppercase;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         /* ===== TOAST ===== */
         .toast-wrap {
             position: fixed;
-            top: 16px;
-            left: 12px;
-            right: 12px;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
             z-index: 300;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             pointer-events: none;
         }
         .toast-msg {
-            background: var(--card);
+            background: var(--bg2);
             color: var(--text);
             padding: 12px 16px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border-left: 4px solid var(--green);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(20px);
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: auto;
+            text-align: center;
         }
         .toast-msg.show { opacity: 1; transform: translateY(0); }
         .toast-msg.err { border-left-color: var(--red); }
@@ -393,11 +393,143 @@
         /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             color: var(--muted);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background: var(--bg2);
+            border-radius: var(--r);
+            border: 2px dashed var(--border);
+            margin-bottom: 20px;
         }
-        .empty-state svg { margin-bottom: 8px; opacity: 0.4; }
+        .empty-state svg { margin-bottom: 12px; display: block; margin: 0 auto 12px; }
+
+        /* ===== AUTOCOMPLETE ===== */
+        .field-autocomplete {
+            position: relative;
+        }
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg2);
+            border: 1px solid var(--green);
+            border-radius: 0 0 8px 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            z-index: 60;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: none;
+        }
+        .autocomplete-list.visible { display: block; }
+        .autocomplete-item {
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(85,93,101,0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:active, .autocomplete-item.active {
+            background: var(--hover);
+        }
+        .autocomplete-item .ac-name { font-weight: 600; }
+        .autocomplete-item .ac-price {
+            font-size: 0.8rem;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        /* ===== PRICE LIST SECTION ===== */
+        .pricelist-toggle {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--text);
+            font-family: 'Geom Graphic', -apple-system, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pricelist-toggle:active { background: var(--hover); }
+        .pricelist-toggle .toggle-icon {
+            transition: transform 0.3s;
+            color: var(--green);
+        }
+        .pricelist-toggle.expanded .toggle-icon { transform: rotate(180deg); }
+
+        .pricelist-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .pricelist-content.expanded {
+            max-height: 2000px;
+        }
+
+        .pricelist-inner {
+            background: var(--card);
+            border-radius: 0 0 var(--r) var(--r);
+            padding: 10px 14px;
+            margin-top: -2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .pricelist-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 8px;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(85,93,101,0.3);
+        }
+        .pricelist-row:last-child { border-bottom: none; }
+
+        .pricelist-row .pl-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .pricelist-row input {
+            font-family: 'Geom Graphic', -apple-system, sans-serif;
+            font-size: 0.9rem;
+            background: var(--input);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 7px 8px;
+            outline: none;
+            width: 100%;
+            -webkit-appearance: none;
+            text-align: right;
+        }
+        .pricelist-row input:focus {
+            border-color: var(--green);
+            background: var(--hover);
+        }
+
+        .pricelist-note {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: center;
+            padding: 8px 0 4px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -405,20 +537,36 @@
     <!-- Header -->
     <div class="header">
         <img src="res/img/logo.png" alt="SKRAP">
+        <div class="header-total">
+            <span class="header-total-label">TOTAL</span>
+            <span class="header-total-value" id="totalDisplayHeader">$0</span>
+        </div>
     </div>
 
     <!-- Main Content -->
     <div class="main">
+        
         <!-- Active card (current metal being edited) -->
         <div id="activeCardArea"></div>
 
+        <!-- Add Row Button -->
+        <div class="add-btn-wrap">
+            <button class="add-btn" id="addRowBtn" title="Agregar metal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar Metal
+            </button>
+        </div>
+
+        <!-- Saved items list -->
+        <div class="items-list" id="itemsList"></div>
+
         <!-- Discount -->
         <div class="section">
-            <div class="section-title">Descuento</div>
+            <div class="section-title">Descuento / Ajuste</div>
             <div class="discount-grid">
                 <div class="field">
                     <label>Motivo</label>
-                    <input type="text" id="discountReason" placeholder="Ej: Deuda...">
+                    <input type="text" id="discountReason" placeholder="Ej: Deuda, Redondeo...">
                 </div>
                 <div class="field">
                     <label>Monto ($)</label>
@@ -427,34 +575,32 @@
             </div>
         </div>
 
-        <!-- Add Row -->
-        <div class="add-btn-wrap">
-            <button class="add-btn" id="addRowBtn" title="Agregar metal">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Agregar Metal
-            </button>
-        </div>
-
-        <!-- Saved items list -->
-        <div class="items-list" id="itemsList"></div>
-
         <!-- Actions -->
         <div class="actions-wrap">
-            <button class="action-btn primary" id="generateBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Generar
-            </button>
             <button class="action-btn secondary" id="clearBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 Limpiar
             </button>
+            <button class="action-btn primary" id="generateBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Generar
+            </button>
         </div>
-    </div>
 
-    <!-- Fixed Total Bar -->
-    <div class="total-bar">
-        <span class="total-bar-label">TOTAL</span>
-        <span class="total-bar-value" id="totalDisplay">$0</span>
+        <!-- Price List Toggle -->
+        <button class="pricelist-toggle" id="pricelistToggle">
+            <span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:6px;"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Lista de Precios
+            </span>
+            <svg class="toggle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pricelist-content" id="pricelistContent">
+            <div class="pricelist-inner" id="pricelistInner">
+                <!-- Rows generated by JS -->
+            </div>
+            <div class="pricelist-note">Los precios se guardan automáticamente en este dispositivo</div>
+        </div>
     </div>
 
     <!-- Invoice Modal -->
@@ -495,8 +641,151 @@
         const saveJpgBtn = document.getElementById('saveJpgBtn');
         const savePdfBtn = document.getElementById('savePdfBtn');
         const invoicePreview = document.getElementById('invoicePreview');
+        const totalDisplayHeader = document.getElementById('totalDisplayHeader');
 
         let rowCount = 0;
+
+        // ===== PRICE LIST (localStorage) =====
+        const DEFAULT_METALS = [
+            'Cobre Primera', 'Cobre Segunda', 'Cobre estañado', 'Cable de cobre',
+            'Bronce', 'Rad.Bronce y Cobre', 'Rad.Alum y Cobre', 'Pasta',
+            'Perfil', 'Cárter', 'Blando', 'Latitas', 'Plomo',
+            'Batería c/liquido', 'Batería s/líquido', 'Batería con gel',
+            'Bochas', 'Acero', 'Radiografía', 'Placas electrónicas'
+        ];
+        const STORAGE_KEY = 'skrap_price_list';
+
+        function loadPriceList() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) return JSON.parse(saved);
+            } catch (e) {}
+            // Default: all prices at 0
+            const list = {};
+            DEFAULT_METALS.forEach(m => list[m] = 0);
+            return list;
+        }
+
+        function savePriceList() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(priceList));
+            } catch (e) {}
+        }
+
+        let priceList = loadPriceList();
+
+        // Build Price List UI
+        function buildPriceListUI() {
+            const container = document.getElementById('pricelistInner');
+            container.innerHTML = '';
+            DEFAULT_METALS.forEach(metal => {
+                const row = document.createElement('div');
+                row.className = 'pricelist-row';
+                const price = priceList[metal] || 0;
+                row.innerHTML = `
+                    <span class="pl-name">${metal}</span>
+                    <input type="number" value="${price || ''}" placeholder="0" min="0" step="0.01" inputmode="decimal" data-metal="${metal}">
+                `;
+                const input = row.querySelector('input');
+                input.addEventListener('input', () => {
+                    priceList[metal] = parseFloat(input.value) || 0;
+                    savePriceList();
+                });
+                container.appendChild(row);
+            });
+        }
+
+        buildPriceListUI();
+
+        // Toggle price list
+        const pricelistToggle = document.getElementById('pricelistToggle');
+        const pricelistContent = document.getElementById('pricelistContent');
+        pricelistToggle.addEventListener('click', () => {
+            pricelistToggle.classList.toggle('expanded');
+            pricelistContent.classList.toggle('expanded');
+        });
+
+        // ===== AUTOCOMPLETE =====
+        function setupAutocomplete(metalInput, priceInput) {
+            const field = metalInput.closest('.field');
+            field.classList.add('field-autocomplete');
+
+            const listEl = document.createElement('div');
+            listEl.className = 'autocomplete-list';
+            field.appendChild(listEl);
+
+            let activeIdx = -1;
+
+            function updateList() {
+                const val = metalInput.value.trim().toLowerCase();
+                listEl.innerHTML = '';
+                activeIdx = -1;
+
+                if (!val) { listEl.classList.remove('visible'); return; }
+
+                const matches = DEFAULT_METALS.filter(m => m.toLowerCase().includes(val));
+                if (matches.length === 0) { listEl.classList.remove('visible'); return; }
+
+                matches.forEach((m, i) => {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    const p = priceList[m] || 0;
+                    item.innerHTML = `<span class="ac-name">${m}</span>${p > 0 ? '<span class="ac-price">$' + p.toLocaleString('es-AR') + '</span>' : ''}`;
+                    item.addEventListener('mousedown', (e) => e.preventDefault()); // prevent blur
+                    item.addEventListener('click', () => selectItem(m));
+                    listEl.appendChild(item);
+                });
+                listEl.classList.add('visible');
+            }
+
+            function selectItem(metal) {
+                metalInput.value = metal;
+                const p = priceList[metal] || 0;
+                if (p > 0) {
+                    priceInput.value = p;
+                    // Trigger subtotal recalc
+                    priceInput.dispatchEvent(new Event('input'));
+                }
+                listEl.classList.remove('visible');
+            }
+
+            metalInput.addEventListener('input', updateList);
+            metalInput.addEventListener('focus', updateList);
+            metalInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    listEl.classList.remove('visible');
+                    // Check for exact match on blur (case insensitive)
+                    const val = metalInput.value.trim().toLowerCase();
+                    const exactMatch = DEFAULT_METALS.find(m => m.toLowerCase() === val);
+                    if (exactMatch) {
+                        metalInput.value = exactMatch;
+                        const p = priceList[exactMatch] || 0;
+                        if (p > 0 && !priceInput.value) {
+                            priceInput.value = p;
+                            priceInput.dispatchEvent(new Event('input'));
+                        }
+                    }
+                }, 150);
+            });
+
+            metalInput.addEventListener('keydown', (e) => {
+                const items = listEl.querySelectorAll('.autocomplete-item');
+                if (!items.length) return;
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    activeIdx = Math.min(activeIdx + 1, items.length - 1);
+                    items.forEach((it, i) => it.classList.toggle('active', i === activeIdx));
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    activeIdx = Math.max(activeIdx - 1, 0);
+                    items.forEach((it, i) => it.classList.toggle('active', i === activeIdx));
+                } else if (e.key === 'Enter' && activeIdx >= 0) {
+                    e.preventDefault();
+                    const name = items[activeIdx].querySelector('.ac-name').textContent;
+                    selectItem(name);
+                }
+            });
+        }
 
         // ===== TOAST =====
         function toast(msg, err = false) {
@@ -514,7 +803,6 @@
 
         // ===== FORMAT =====
         function fmt(val) {
-            // Si el valor es entero, no mostrar decimales
             if (Number.isInteger(val) || Math.abs(val - Math.round(val)) < 0.001) {
                 return '$' + Math.round(val).toLocaleString('es-AR');
             }
@@ -557,6 +845,7 @@
                 <div class="item-subtotal">$0</div>
             `;
 
+            const metalInput = card.querySelector('.in-metal');
             const qtyInput = card.querySelector('.in-qty');
             const priceInput = card.querySelector('.in-price');
             const removeBtn = card.querySelector('.item-remove');
@@ -564,6 +853,9 @@
             qtyInput.addEventListener('input', () => calcCard(card));
             priceInput.addEventListener('input', () => calcCard(card));
             removeBtn.addEventListener('click', () => removeRow(card));
+
+            // Setup autocomplete for this card
+            setupAutocomplete(metalInput, priceInput);
 
             return card;
         }
@@ -574,20 +866,20 @@
                 return;
             }
 
-            // Move current active card to saved list
+            // Move current active card to saved list (goes down)
             const currentActive = activeCardArea.querySelector('.item-card');
             if (currentActive) {
                 itemsList.prepend(currentActive);
             }
 
-            // Create new card in active area
+            // Create new card in active area (at the top)
             const card = createCard();
             activeCardArea.innerHTML = '';
             activeCardArea.appendChild(card);
             updateAddBtn();
             renumber();
-
-            // Scroll to top to see the new active card
+            
+            // View remains at the top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -610,7 +902,6 @@
         }
 
         function getAllCards() {
-            // Active card first, then saved cards
             const all = [];
             const active = activeCardArea.querySelector('.item-card');
             if (active) all.push(active);
@@ -648,7 +939,7 @@
             const discAmt = parseFloat(document.getElementById('discountAmount').value) || 0;
             const total = Math.max(0, subtotal - discAmt);
 
-            document.getElementById('totalDisplay').textContent = fmt(total);
+            totalDisplayHeader.textContent = fmt(total);
         }
 
         document.getElementById('discountAmount').addEventListener('input', recalcTotals);
@@ -740,12 +1031,19 @@
         }
 
         // ===== SAVE =====
+        function getFileName(ext) {
+            const now = new Date();
+            const date = now.toLocaleDateString('es-AR').replace(/\//g, '-');
+            const time = now.toLocaleTimeString('es-AR', { hour12: false }).replace(/:/g, '-');
+            return `SKRAP_Remito_${date}_${time}.${ext}`;
+        }
+
         async function saveJpg() {
             const el = document.getElementById('invoiceCapture');
             try {
                 const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
                 const link = document.createElement('a');
-                link.download = `SKRAP_Remito_${new Date().toLocaleDateString('es-AR').replace(/\//g, '-')}.jpg`;
+                link.download = getFileName('jpg');
                 link.href = canvas.toDataURL('image/jpeg', 0.95);
                 link.click();
                 toast('JPG guardado');
@@ -762,7 +1060,7 @@
                 const w = pdf.internal.pageSize.getWidth();
                 const h = (canvas.height * w) / canvas.width;
                 pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
-                pdf.save(`SKRAP_Remito_${new Date().toLocaleDateString('es-AR').replace(/\//g, '-')}.pdf`);
+                pdf.save(getFileName('pdf'));
                 toast('PDF guardado');
             } catch (e) { toast('Error al guardar PDF', true); console.error(e); }
         }
